@@ -7,6 +7,16 @@ let server = express();
 
 const port = 3000;
 
+var whitelist = ["http://localhost:8080"];
+var corsOptions = {
+  origin: function(origin, callback) {
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  },
+  credentials: true
+};
+server.use(cors(corsOptions));
+
 server.use(bp.urlencoded({ extended: true }));
 server.use(bp.json());
 
